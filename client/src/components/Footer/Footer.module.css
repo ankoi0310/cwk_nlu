@@ -1,0 +1,3 @@
+.footer-title {
+  @apply mb-4 flex items-center justify-center font-semibold uppercase md:justify-start;
+}

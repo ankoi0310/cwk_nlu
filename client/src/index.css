@@ -1,0 +1,62 @@
+/* @import "slick-carousel/slick/slick.css"; */
+/* @import "slick-carousel/slick/slick-theme.css"; */
+
+@import '@fontsource/montserrat/300.css';
+@import '@fontsource/montserrat/400.css';
+@import '@fontsource/montserrat/500.css';
+@import '@fontsource/montserrat/600.css';
+@import '@fontsource/montserrat/700.css';
+@import '@fontsource/montserrat/800.css';
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #00B96B;
+  --color-primary-light: #00D17F;
+  --color-primary-dark: #009F5B;
+  --title-color: #0B0A0A;
+  --text-color: #403A3A;
+  --text-color-light: #707070;
+  --container-color: #FAFAFA;
+  --container-color-alt: #F0EFEF;
+  --body-color: #FCFCFC;
+
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1rem;
+  --normal-font-size: .938rem;
+  --small-font-size: .875rem;
+  --smaller-font-size: .813rem;
+}
+
+@layer base {
+  *, ::before, ::after {
+    @apply box-border;
+  }
+
+  body {
+    @apply font-primary;
+  }
+
+  button, [type='button'], [type='reset'], [type='submit'] {
+    @apply rounded-md shadow-sm hover:bg-[var(--container-color-alt)] transition-colors duration-200 ease-in-out;
+  }
+}
+
+@layer components {
+  .icon-link,
+  .text-link {
+    @apply text-gray-600 dark:text-gray-200;
+  }
+
+  .text-link:hover {
+    @apply text-gray-800 dark:text-gray-100;
+  }
+
+  .post-icon {
+    @apply min-w-fit mr-2;
+  }
+}
