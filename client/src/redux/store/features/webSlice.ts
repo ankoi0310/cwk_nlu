@@ -12,21 +12,21 @@ export const ACTION_TYPE = {
 }
 
 export interface WebState {
-  banner: { loading: boolean; error: any; data: any }
-  news: { loading: boolean; error: any; data: [] }
-  notification: { loading: boolean; error: any; data: [] }
-  guide: { loading: boolean; error: any; data: [] }
-  tuition: { loading: boolean; error: any; data: [] }
-  detail: { loading: boolean; error: any; data: any }
+  banner: { loading: boolean; data: any }
+  news: { loading: boolean; data: [] }
+  notification: { loading: boolean; data: [] }
+  guide: { loading: boolean; data: [] }
+  tuition: { loading: boolean; data: [] }
+  detail: { loading: boolean; data: any }
 }
 
 const initialState: WebState = {
-  banner: { loading: false, error: null, data: null },
-  news: { loading: false, error: null, data: [] },
-  notification: { loading: false, error: null, data: [] },
-  guide: { loading: false, error: null, data: [] },
-  tuition: { loading: false, error: null, data: [] },
-  detail: { loading: false, error: null, data: null },
+  banner: { loading: false, data: null },
+  news: { loading: false, data: [] },
+  notification: { loading: false, data: [] },
+  guide: { loading: false, data: [] },
+  tuition: { loading: false, data: [] },
+  detail: { loading: false, data: null },
 }
 
 const getBanner = createAsyncThunk(ACTION_TYPE.BANNER, async (data: any, thunkAPI) => {
@@ -110,7 +110,7 @@ export const WebSlice = createSlice({
   extraReducers: builder => {
     builder
       // banner
-      .addCase(getBanner.pending, (state, action) => {
+      .addCase(getBanner.pending, state => {
         state.banner.loading = true
         return state
       })
@@ -119,13 +119,12 @@ export const WebSlice = createSlice({
         state.banner.data = action.payload.data.ds_banner[0]
         return state
       })
-      .addCase(getBanner.rejected, (state, action) => {
+      .addCase(getBanner.rejected, state => {
         state.banner.loading = false
-        state.banner.error = action.payload
         return state
       })
       // news
-      .addCase(getNews.pending, (state, action) => {
+      .addCase(getNews.pending, state => {
         state.news.loading = true
         return state
       })
@@ -134,13 +133,12 @@ export const WebSlice = createSlice({
         state.news.data = action.payload?.data?.ds_bai_viet
         return state
       })
-      .addCase(getNews.rejected, (state, action) => {
+      .addCase(getNews.rejected, state => {
         state.news.loading = false
-        state.news.error = action.payload
         return state
       })
       // notification
-      .addCase(getNotification.pending, (state, action) => {
+      .addCase(getNotification.pending, state => {
         state.notification.loading = true
         return state
       })
@@ -149,13 +147,12 @@ export const WebSlice = createSlice({
         state.notification.data = action.payload?.data?.ds_bai_viet
         return state
       })
-      .addCase(getNotification.rejected, (state, action) => {
+      .addCase(getNotification.rejected, state => {
         state.notification.loading = false
-        state.notification.error = action.payload
         return state
       })
       // guide
-      .addCase(getGuide.pending, (state, action) => {
+      .addCase(getGuide.pending, state => {
         state.guide.loading = true
         return state
       })
@@ -164,13 +161,12 @@ export const WebSlice = createSlice({
         state.guide.data = action.payload?.data?.ds_bai_viet
         return state
       })
-      .addCase(getGuide.rejected, (state, action) => {
+      .addCase(getGuide.rejected, state => {
         state.guide.loading = false
-        state.guide.error = action.payload
         return state
       })
       // tuition
-      .addCase(getTuition.pending, (state, action) => {
+      .addCase(getTuition.pending, state => {
         state.tuition.loading = true
         return state
       })
@@ -179,13 +175,12 @@ export const WebSlice = createSlice({
         state.tuition.data = action.payload?.data?.ds_bai_viet
         return state
       })
-      .addCase(getTuition.rejected, (state, action) => {
+      .addCase(getTuition.rejected, state => {
         state.tuition.loading = false
-        state.tuition.error = action.payload
         return state
       })
       // detail
-      .addCase(getDetail.pending, (state, action) => {
+      .addCase(getDetail.pending, state => {
         state.detail.loading = true
         return state
       })
@@ -194,9 +189,8 @@ export const WebSlice = createSlice({
         state.detail.data = action.payload?.data?.ds_bai_viet[0]
         return state
       })
-      .addCase(getDetail.rejected, (state, action) => {
+      .addCase(getDetail.rejected, state => {
         state.detail.loading = false
-        state.detail.error = action.payload
         return state
       })
   },

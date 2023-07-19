@@ -1,11 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { curryGetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { AuthSlice } from './features/authSlice'
-import { TranscriptSlice } from './features/transcriptSlice'
-import { WebSlice } from './features/webSlice'
+import { AuthSlice } from 'redux/store/features/authSlice'
+import { TranscriptSlice } from 'redux/store/features/transcriptSlice'
+import { WebSlice } from 'redux/store/features/webSlice'
 
 const persistConfig = {
   key: 'root',

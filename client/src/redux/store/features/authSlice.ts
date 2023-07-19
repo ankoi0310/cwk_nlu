@@ -4,14 +4,14 @@ import useAxios from 'hooks/useAxios'
 import storage from 'redux-persist/lib/storage'
 import { RootState } from 'redux/store'
 import MySwal from 'utils/custom/MySwal'
-import { BaseState } from './baseState'
 
 export const ACTION_TYPE = {
   AUTH_LOGIN: 'AUTH_LOGIN',
   AUTH_LOGOUT: 'AUTH_LOGOUT',
 }
 
-export interface AuthState extends BaseState {
+export interface AuthState {
+  loading: boolean
   isLogin: boolean
   user: any
   userInfo: any
@@ -19,7 +19,6 @@ export interface AuthState extends BaseState {
 
 const initialState: AuthState = {
   loading: false,
-  error: null,
   isLogin: false,
   user: null,
   userInfo: null,
@@ -30,15 +29,13 @@ const login = createAsyncThunk(ACTION_TYPE.AUTH_LOGIN, async (payload: any, thun
     const response = await useAxios({
       axiosInstance: axiosInstance,
       method: 'POST',
-      url: '/api/auth/login',
+      url: '/auth/login',
       data: payload,
     })
 
-    console.log('response', response.data)
     return thunkAPI.fulfillWithValue(response)
   } catch (error: any) {
-    console.log('error', error)
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error?.response?.data?.message || 'Đăng nhập thất bại')
   }
 })
 
@@ -54,33 +51,39 @@ export const AuthSlice = createSlice({
   extraReducers: builder => {
     builder
       // login
-      .addCase(login.pending, (state, action) => {
+      .addCase(login.pending, state => {
         state.loading = true
         return state
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false
-        state.error = null
         state.user = action.payload
         state.isLogin = true
-        storage.setItem('persist:root', JSON.stringify({ auth: state }))
         MySwal.fire({
           icon: 'success',
           title: 'Đăng nhập thành công',
           showConfirmButton: false,
           timer: 1500,
-        }).then((_: any) => { })
+        }).then((_: any) => {})
         return state
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false
         state.user = null
-        state.error = action.payload
         state.isLogin = false
+        storage.setItem(
+          'persist:root',
+          JSON.stringify({
+            auth: {
+              ...state,
+              error: action.payload,
+            },
+          }),
+        )
         return state
       })
       // logout
-      .addCase(logout.fulfilled, (state, action) => {
+      .addCase(logout.fulfilled, state => {
         state = initialState
         storage.removeItem('persist:root')
         return state
@@ -88,6 +91,5 @@ export const AuthSlice = createSlice({
   },
 })
 
-export default AuthSlice.reducer
 export { login, logout }
 export const getCurrentToken = (state: RootState) => state.auth.user?.access_token || null

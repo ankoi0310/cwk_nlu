@@ -1,19 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
-import { BaseState } from './baseState'
 
 export const ACTION_TYPE = {
   GET_TRANSCRIPT: 'GET_TRANSCRIPT',
 }
 
-export interface ScoreState extends BaseState {
+export interface ScoreState {
+  loading: boolean
   transcript: any
 }
 
 const initialState: ScoreState = {
   loading: false,
-  error: null,
   transcript: null,
 }
 
@@ -31,7 +30,6 @@ const getTranscript = createAsyncThunk(ACTION_TYPE.GET_TRANSCRIPT, async (payloa
         signal: payload?.signal,
       },
     })
-    console.log(response)
 
     return thunkAPI.fulfillWithValue(response)
   } catch (error: any) {
@@ -46,7 +44,7 @@ export const TranscriptSlice = createSlice({
   extraReducers: builder => {
     builder
       // getTranscript
-      .addCase(getTranscript.pending, (state, action) => {
+      .addCase(getTranscript.pending, state => {
         state.loading = true
         return state
       })
@@ -55,13 +53,11 @@ export const TranscriptSlice = createSlice({
         state.transcript = action.payload
         return state
       })
-      .addCase(getTranscript.rejected, (state, action) => {
+      .addCase(getTranscript.rejected, state => {
         state.loading = false
-        state.error = action.payload
         return state
       })
   },
 })
 
-export default TranscriptSlice.reducer
 export { getTranscript }
