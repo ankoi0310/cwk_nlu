@@ -3,23 +3,19 @@ import { AccountCircle, Lock } from '@mui/icons-material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { VscLoading } from 'react-icons/vsc'
-import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from 'redux/store'
+import { ACTION_TYPE, login } from 'redux/store/features/authSlice'
+import { usernameRegex } from 'utils/validation/formValidation'
 import * as yup from 'yup'
-import { useAppDispatch, useAppSelector } from '../../../../redux/store'
-import { login } from '../../../../redux/store/features/authSlice'
-import { usernameRegex } from '../../../../utils/validation/formValidation'
-import styles from './LoginForm.module.css'
-import classNames from 'classnames/bind'
-
-const cx = classNames.bind(styles)
 
 type Inputs = {
   username: string
@@ -28,9 +24,9 @@ type Inputs = {
 }
 
 const LoginForm = () => {
-  const { loading, error, isLogin, user } = useAppSelector(state => state.auth)
+  const { loading } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  const [error, setError] = useState<any>(null)
 
   const schema = yup.object().shape({
     username: yup
@@ -49,17 +45,29 @@ const LoginForm = () => {
     resolver: yupResolver(schema),
   })
 
+  const onSubmit = async (payload: Inputs) => {
+    const response = await dispatch(login(payload))
+
+    if (response.type === ACTION_TYPE.AUTH_LOGIN + '/rejected') {
+      setError(response.payload)
+    } else {
+      setError(null)
+    }
+  }
+
+  useEffect(() => {}, [])
+
   return (
     <Card variant="outlined" className={'shadow-md'}>
       <CardHeader
         title="Đăng nhập"
-        className={cx('card-header bg-primary')}
+        className={'card-header bg-primary'}
         titleTypographyProps={{
           className: 'text-white text-[14px] uppercase font-bold',
         }}
       />
       <CardContent>
-        <form onSubmit={handleSubmit(async payload => await dispatch(login(payload)))}>
+        <form onSubmit={handleSubmit(payload => onSubmit(payload))}>
           <Box className={'flex flex-col'}>
             <FormControl>
               <TextField
@@ -100,9 +108,13 @@ const LoginForm = () => {
               />
             </FormControl>
 
+            <FormHelperText error={!!error} className={'mb-2'}>
+              {error}
+            </FormHelperText>
+
             <Button variant="contained" type="submit" className={'text-white'}>
               Đăng nhập
-              <VscLoading className={cx('bg-[var(--color-primary)] animate-spin ml-2', { hidden: !loading })} />
+              {loading && <VscLoading className={'bg-[var(--color-primary)] animate-spin ml-2'} />}
             </Button>
           </Box>
         </form>
