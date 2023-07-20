@@ -1,7 +1,7 @@
 import express from 'express'
 import axiosInstance from '../../core/apis/nlu'
-import useAsyncFunction from '../../helpers/useAsyncFunction'
 import useAxios from '../../core/hooks/useAxios'
+import useAsyncFunction from '../../helpers/useAsyncFunction'
 
 const router = express.Router()
 

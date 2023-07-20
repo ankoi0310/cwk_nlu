@@ -2,9 +2,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
 import morgan from 'morgan'
-import { CORS_ORIGIN } from './core/config/appConfig'
 import routes from './routes'
-import path from 'path'
 
 process.on('uncaughtException', e => {
   console.error(e)
@@ -29,7 +27,7 @@ app.use('/api', routes)
 /*---------- GET METHOD NOT FOUND RETURN NOT FOUND RESPONSE ----------*/
 app.get('*', (req, res) => {
   res.status(404).json({ message: 'Not found' })
-});
+})
 /*--------------------------------------------------------------------*/
 
 export default app

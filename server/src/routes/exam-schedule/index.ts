@@ -5,37 +5,15 @@ import useAsyncFunction from '../../helpers/useAsyncFunction'
 
 const router = express.Router()
 
-/*----------- Lấy danh sách điều kiện lọc ------------*/
+/*----------- Lấy danh sách lọc học kỳ ------------*/
 router.post(
-  '/dkmh/w-locdsdieukienloc',
+  '/report/w-locdshockylichthisinhvien',
   useAsyncFunction(async (request, response) => {
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
         method: 'POST',
-        url: '/dkmh/w-locdsdieukienloc',
-        headers: {
-          Authorization: request.headers.authorization,
-        },
-      })
-
-      return response.json(res.data)
-    } catch (error: any) {
-      return response.json(error?.response?.data || error)
-    }
-  }),
-)
-/*------------------------------*/
-
-/*----------- Lấy danh sách môn học ------------*/
-router.post(
-  '/dkmh/w-locdsnhomto',
-  useAsyncFunction(async (request, response) => {
-    try {
-      const res = await useAxios({
-        axiosInstance: axiosInstance,
-        method: 'POST',
-        url: '/dkmh/w-locdsnhomto',
+        url: '/report/w-locdshockylichthisinhvien',
         headers: {
           Authorization: request.headers.authorization,
         },
@@ -50,15 +28,60 @@ router.post(
 )
 /*------------------------------*/
 
-/*----------- Đăng ký môn học ------------*/
+/*----------- Lấy danh sách đối tượng lọc ------------*/
 router.post(
-  '/dkmh/w-xulydkmhsinhvien',
+  '/epm/w-locdsdoituongxemlichthi',
   useAsyncFunction(async (request, response) => {
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
         method: 'POST',
-        url: '/dkmh/w-xulydkmhsinhvien',
+        url: '/epm/w-locdsdoituongxemlichthi',
+        headers: {
+          Authorization: request.headers.authorization,
+        },
+      })
+
+      return response.json(res.data)
+    } catch (error: any) {
+      return response.json(error?.response?.data || error)
+    }
+  }),
+)
+/*------------------------------*/
+
+/*----------- Xem lịch thi cá nhân ------------*/
+router.post(
+  '/epm/w-locdslichthisvtheohocky',
+  useAsyncFunction(async (request, response) => {
+    try {
+      const res = await useAxios({
+        axiosInstance: axiosInstance,
+        method: 'POST',
+        url: '/epm/w-locdslichthisvtheohocky',
+        headers: {
+          Authorization: request.headers.authorization,
+        },
+        data: request.body,
+      })
+
+      return response.json(res.data)
+    } catch (error: any) {
+      return response.json(error?.response?.data || error)
+    }
+  }),
+)
+/*------------------------------*/
+
+/*----------- Xem lịch thi theo đối tượng ------------*/
+router.post(
+  '/epm/w-locdsdulieutheodoituonglichthi',
+  useAsyncFunction(async (request, response) => {
+    try {
+      const res = await useAxios({
+        axiosInstance: axiosInstance,
+        method: 'POST',
+        url: '/epm/w-locdsdulieutheodoituonglichthi',
         headers: {
           Authorization: request.headers.authorization,
         },

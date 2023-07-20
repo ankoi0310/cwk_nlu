@@ -5,17 +5,17 @@ import useAsyncFunction from '../../helpers/useAsyncFunction'
 
 const router = express.Router()
 
-/*----------- Đăng nhập ------------*/
+/*----------- Lấy danh sách lọc học phí ----------*/
 router.post(
-  '/login',
+  '/report/w-locdshockyhocphisinhvien',
   useAsyncFunction(async (request, response) => {
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
         method: 'POST',
-        url: '/auth/login',
+        url: '/report/w-locdshockyhocphisinhvien',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: request.headers.authorization,
         },
         data: request.body,
       })
@@ -28,15 +28,15 @@ router.post(
 )
 /*------------------------------*/
 
-/*----------- Đăng xuất ------------*/
+/*----------- Xem học phí tổng quát ----------*/
 router.post(
-  '/logout',
+  '/rms/w-locdstonghophocphisv',
   useAsyncFunction(async (request, response) => {
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
         method: 'POST',
-        url: '/auth/logout',
+        url: '/rms/w-locdstonghophocphisv',
         headers: {
           Authorization: request.headers.authorization,
         },
@@ -48,5 +48,29 @@ router.post(
     }
   }),
 )
+/*------------------------------*/
+
+/*----------- Xem học phí theo học kỳ ----------*/
+router.post(
+  '/rms/w-locdschitiethocphisvtheohocky',
+  useAsyncFunction(async (request, response) => {
+    try {
+      const res = await useAxios({
+        axiosInstance: axiosInstance,
+        method: 'POST',
+        url: '/rms/w-locdschitiethocphisvtheohocky',
+        headers: {
+          Authorization: request.headers.authorization,
+        },
+        data: request.body,
+      })
+
+      return response.json(res.data)
+    } catch (error: any) {
+      return response.json(error?.response?.data || error)
+    }
+  }),
+)
+/*------------------------------*/
 
 export default router

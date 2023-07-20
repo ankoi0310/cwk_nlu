@@ -1,9 +1,10 @@
 import express from 'express'
-// import { createProxyMiddleware } from 'http-proxy-middleware'
+import test from './__test'
 import auth from './authentication'
+import examSchedule from './exam-schedule'
 import schedule from './schedule'
 import subject from './subject'
-import test from './__test'
+import tuition from './tuition'
 import user from './user'
 import web from './web'
 
@@ -15,8 +16,10 @@ router.use('/test', test)
 
 /*------------------------*/
 router.use('/auth', auth)
+router.use(examSchedule)
 router.use(schedule)
 router.use(subject)
+router.use(tuition)
 router.use(user)
 router.use('/web', web)
 /*------------------------*/
