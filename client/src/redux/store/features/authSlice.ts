@@ -14,14 +14,12 @@ export interface AuthState {
   loading: boolean
   isLogin: boolean
   user: any
-  userInfo: any
 }
 
 const initialState: AuthState = {
   loading: false,
   isLogin: false,
   user: null,
-  userInfo: null,
 }
 
 const login = createAsyncThunk(ACTION_TYPE.AUTH_LOGIN, async (payload: any, thunkAPI) => {
@@ -40,8 +38,17 @@ const login = createAsyncThunk(ACTION_TYPE.AUTH_LOGIN, async (payload: any, thun
 })
 
 const logout = createAsyncThunk(ACTION_TYPE.AUTH_LOGOUT, async (payload: any, thunkAPI) => {
-  const response = await axiosInstance.post('/logout', payload)
-  return response.data
+  try {
+    const response = await useAxios({
+      axiosInstance: axiosInstance,
+      method: 'POST',
+      url: '/auth/logout',
+    })
+
+    return thunkAPI.fulfillWithValue(response)
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error?.response?.data?.message || 'Có lỗi xảy ra khi đăng xuất')
+  }
 })
 
 export const AuthSlice = createSlice({
@@ -59,6 +66,7 @@ export const AuthSlice = createSlice({
         state.loading = false
         state.user = action.payload
         state.isLogin = true
+
         MySwal.fire({
           icon: 'success',
           title: 'Đăng nhập thành công',
@@ -69,8 +77,6 @@ export const AuthSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false
-        state.user = null
-        state.isLogin = false
         storage.setItem(
           'persist:root',
           JSON.stringify({
@@ -83,9 +89,17 @@ export const AuthSlice = createSlice({
         return state
       })
       // logout
+      .addCase(logout.pending, state => {
+        state.loading = true
+        return state
+      })
       .addCase(logout.fulfilled, state => {
         state = initialState
         storage.removeItem('persist:root')
+        return state
+      })
+      .addCase(logout.rejected, state => {
+        state.loading = false
         return state
       })
   },
