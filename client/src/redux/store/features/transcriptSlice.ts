@@ -44,7 +44,7 @@ export const TranscriptSlice = createSlice({
       })
       .addCase(getTranscript.fulfilled, (state, action) => {
         state.loading = false
-        state.transcript = action.payload.data
+        state.transcript = action.payload.data.data
         return state
       })
       .addCase(getTranscript.rejected, state => {

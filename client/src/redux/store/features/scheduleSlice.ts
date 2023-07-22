@@ -81,7 +81,7 @@ export const ScheduleSlice = createSlice({
       })
       .addCase(getSemesterFilterList.fulfilled, (state, action) => {
         state.semesterFilterList.loading = false
-        state.semesterFilterList.data = action.payload.data?.ds_hoc_ky
+        state.semesterFilterList.data = action.payload.data.data.ds_hoc_ky
       })
       .addCase(getSemesterFilterList.rejected, state => {
         state.semesterFilterList.loading = false
@@ -91,7 +91,7 @@ export const ScheduleSlice = createSlice({
       })
       .addCase(getObjectFilterList.fulfilled, (state, action) => {
         state.objectFilterList.loading = false
-        state.objectFilterList.data = action.payload.data?.ds_doi_tuong_tkb
+        state.objectFilterList.data = action.payload.data.data.ds_doi_tuong_tkb
       })
       .addCase(getObjectFilterList.rejected, state => {
         state.objectFilterList.loading = false
@@ -101,7 +101,7 @@ export const ScheduleSlice = createSlice({
       })
       .addCase(getSchedule.fulfilled, (state, action) => {
         state.schedule.loading = false
-        state.schedule.data = action.payload.data?.ds_nhom_to
+        state.schedule.data = action.payload.data.data.ds_nhom_to
       })
       .addCase(getSchedule.rejected, state => {
         state.schedule.loading = false

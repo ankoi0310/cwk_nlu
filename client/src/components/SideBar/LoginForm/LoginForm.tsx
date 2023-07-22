@@ -12,12 +12,11 @@ import FormHelperText from '@mui/material/FormHelperText'
 import InputAdornment from '@mui/material/InputAdornment'
 import ListItemText from '@mui/material/ListItemText'
 import TextField from '@mui/material/TextField'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { VscLoading } from 'react-icons/vsc'
 import { useAppDispatch, useAppSelector } from 'redux/store'
 import { ACTION_TYPE, login, logout } from 'redux/store/features/authSlice'
-import { getUserInfo } from 'redux/store/features/userSlice'
 import { usernameRegex } from 'utils/validation/formValidation'
 import * as yup from 'yup'
 
@@ -28,8 +27,7 @@ type Inputs = {
 }
 
 const LoginForm = () => {
-  const { loading, isLogin } = useAppSelector(state => state.auth)
-  const { userInfo } = useAppSelector(state => state.user)
+  const { loading, isLogin, user } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
   const [error, setError] = useState<any>(null)
 
@@ -66,16 +64,6 @@ const LoginForm = () => {
     await dispatch(logout({}))
   }
 
-  useEffect(() => {
-    const loadUserInfo = async () => {
-      if (isLogin) {
-        await dispatch(getUserInfo({}))
-      }
-    }
-
-    loadUserInfo()
-  }, [])
-
   return (
     <Card variant="outlined" className={'shadow-md'}>
       <CardHeader
@@ -86,7 +74,7 @@ const LoginForm = () => {
         }}
       />
       <CardContent>
-        {isLogin ? (
+        {isLogin && user ? (
           <form onSubmit={handleLogout(() => onLogout())}>
             <Box className={'flex flex-col'}>
               <List>
@@ -98,7 +86,7 @@ const LoginForm = () => {
                           <Typography className={'font-bold'}>Tài khoản</Typography>
                         </Grid>
                         <Grid item md={8}>
-                          <Typography>{userInfo?.ma_sv}</Typography>
+                          <Typography>{user.userName}</Typography>
                         </Grid>
                       </Grid>
                     }
@@ -113,7 +101,7 @@ const LoginForm = () => {
                           <Typography className={'font-bold'}>Họ tên</Typography>
                         </Grid>
                         <Grid item md={8}>
-                          <Typography>{userInfo?.ten_day_du}</Typography>
+                          <Typography>{user.name}</Typography>
                         </Grid>
                       </Grid>
                     }

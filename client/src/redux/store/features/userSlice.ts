@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
+import { UserInfo } from 'type/model/user'
 
 export const ACTION_TYPE = {
   GET_USER_INFO: 'GET_USER_INFO',
@@ -43,7 +44,7 @@ export const UserSlice = createSlice({
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
         state.loading = false
-        state.userInfo = action.payload.data
+        state.userInfo = action.payload.data.data
         return state
       })
       .addCase(getUserInfo.rejected, state => {

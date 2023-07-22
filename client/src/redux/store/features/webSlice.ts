@@ -116,7 +116,7 @@ export const WebSlice = createSlice({
       })
       .addCase(getBanner.fulfilled, (state, action) => {
         state.banner.loading = false
-        state.banner.data = action.payload.data.ds_banner[0]
+        state.banner.data = action.payload.data.data.ds_banner[0]
         return state
       })
       .addCase(getBanner.rejected, state => {
@@ -130,7 +130,7 @@ export const WebSlice = createSlice({
       })
       .addCase(getNews.fulfilled, (state, action) => {
         state.news.loading = false
-        state.news.data = action.payload?.data?.ds_bai_viet
+        state.news.data = action.payload.data.data.ds_bai_viet
         return state
       })
       .addCase(getNews.rejected, state => {
@@ -144,7 +144,7 @@ export const WebSlice = createSlice({
       })
       .addCase(getNotification.fulfilled, (state, action) => {
         state.notification.loading = false
-        state.notification.data = action.payload?.data?.ds_bai_viet
+        state.notification.data = action.payload.data.data.ds_bai_viet
         return state
       })
       .addCase(getNotification.rejected, state => {
@@ -158,7 +158,7 @@ export const WebSlice = createSlice({
       })
       .addCase(getGuide.fulfilled, (state, action) => {
         state.guide.loading = false
-        state.guide.data = action.payload?.data?.ds_bai_viet
+        state.guide.data = action.payload.data.data.ds_bai_viet
         return state
       })
       .addCase(getGuide.rejected, state => {
@@ -172,7 +172,7 @@ export const WebSlice = createSlice({
       })
       .addCase(getTuition.fulfilled, (state, action) => {
         state.tuition.loading = false
-        state.tuition.data = action.payload?.data?.ds_bai_viet
+        state.tuition.data = action.payload.data.data.ds_bai_viet
         return state
       })
       .addCase(getTuition.rejected, state => {
@@ -186,7 +186,7 @@ export const WebSlice = createSlice({
       })
       .addCase(getDetail.fulfilled, (state, action) => {
         state.detail.loading = false
-        state.detail.data = action.payload?.data?.ds_bai_viet[0]
+        state.detail.data = action.payload.data.data.ds_bai_viet[0]
         return state
       })
       .addCase(getDetail.rejected, state => {

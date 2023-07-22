@@ -1,4 +1,23 @@
-declare class UserInfo {
+export class UserLoginResponse {
+  access_token: string
+  token_type: string
+  expires_in: number
+  refresh_token: string
+  userName: string
+  id: string
+  logtime: string
+  code: string
+  result: string
+  passtype: string
+  name: string
+  principal: string
+  roles: string
+  wcf: string
+  '.issued': string
+  '.expires': string
+}
+
+export class UserInfo {
   'thoi_gian_get_data': string
   'ma_sv': string
   'ten_day_du': string

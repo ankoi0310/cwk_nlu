@@ -3,6 +3,7 @@ import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
 import storage from 'redux-persist/lib/storage'
 import { RootState } from 'redux/store'
+import { UserLoginResponse } from 'type/model/user'
 import MySwal from 'utils/custom/MySwal'
 
 export const ACTION_TYPE = {
@@ -13,7 +14,7 @@ export const ACTION_TYPE = {
 export interface AuthState {
   loading: boolean
   isLogin: boolean
-  user: any
+  user: UserLoginResponse | null
 }
 
 const initialState: AuthState = {
@@ -64,7 +65,7 @@ export const AuthSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false
-        state.user = action.payload
+        state.user = action.payload.data
         state.isLogin = true
 
         MySwal.fire({

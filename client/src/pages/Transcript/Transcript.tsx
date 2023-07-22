@@ -64,8 +64,8 @@ const Transcript: FC<TranscriptProps> = () => {
         </TableHead>
         <TableBody>
           {transcript &&
-            transcript.ds_diem_hocky.map(semester => (
-              <>
+            transcript.ds_diem_hocky.map((semester, index) => (
+              <React.Fragment key={index}>
                 <TableRow>
                   <StyledTableCell colSpan={12}>
                     <Typography variant="subtitle2" className={'font-semibold'}>
@@ -74,7 +74,7 @@ const Transcript: FC<TranscriptProps> = () => {
                   </StyledTableCell>
                 </TableRow>
                 {semester.ds_diem_mon_hoc.map((subject, index) => (
-                  <TableRow>
+                  <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{subject.ma_mon}</TableCell>
                     <TableCell>{subject.nhom_to}</TableCell>
@@ -161,7 +161,7 @@ const Transcript: FC<TranscriptProps> = () => {
                     </Box>
                   </TableCell>
                 </TableRow>
-              </>
+              </React.Fragment>
             ))}
         </TableBody>
       </Table>

@@ -69,8 +69,8 @@ export const SubjectSlice = createSlice({
         state.courses = []
       })
       .addCase(getCourses.fulfilled, (state, action) => {
-        state.subjects = (action.payload.data as CourseData).ds_mon_hoc
-        state.courses = (action.payload.data as CourseData).ds_nhom_to
+        state.subjects = (action.payload.data.data as CourseData).ds_mon_hoc
+        state.courses = (action.payload.data.data as CourseData).ds_nhom_to
       })
       .addCase(getCourses.rejected, state => {
         state.courses = []
