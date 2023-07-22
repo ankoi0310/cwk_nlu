@@ -1,4 +1,4 @@
-import AppCarousel from 'components/Home/AppCarousel/AppCarousel'
+import AppCarousel from 'components/Home/AppCarousel'
 import Posts from 'components/Posts/Posts'
 import { FC } from 'react'
 
