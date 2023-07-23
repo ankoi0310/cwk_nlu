@@ -1,34 +1,44 @@
-import { SelectChangeEvent } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from 'redux/store'
+import { getObjectFilterList } from 'redux/store/features/scheduleSlice'
 
-interface ObjectSelectProps {
+export interface ObjectSelectProps {
   value: string
-  items: ObjectFilter[]
-  setValue: (value: string) => void
+  handleChange: (value: string) => void
 }
 
 const ObjectSelect: FC<ObjectSelectProps> = props => {
-  const [value, setValue] = React.useState(props.value)
+  const { objectFilters } = useAppSelector(state => state.schedule)
+  const dispatch = useAppDispatch()
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value as string)
+  const handleChange = (value: string) => {
+    props.handleChange(value)
   }
 
+  useEffect(() => {
+    const loadObjectFilterList = async () => {
+      await dispatch(getObjectFilterList({}))
+    }
+
+    loadObjectFilterList()
+  }, [])
+
   return (
-    <Select
-      value={value}
-      onChange={(event: SelectChangeEvent) => {
-        handleChange(event)
-        props.setValue(event.target.value as string)
-      }}>
-      {props.items.map((item: ObjectFilter, index) => (
-        <MenuItem key={index} value={item.loai_doi_tuong}>
-          {item.ten_doi_tuong}
-        </MenuItem>
-      ))}
-    </Select>
+    objectFilters && (
+      <Select
+        value={props.value !== '' ? props.value : objectFilters[0].loai_doi_tuong.toString()}
+        onChange={event => handleChange(event.target.value as string)}>
+        {objectFilters.map((objectFilter, index) => {
+          return (
+            <MenuItem key={index} value={objectFilter.loai_doi_tuong}>
+              {objectFilter.ten_doi_tuong}
+            </MenuItem>
+          )
+        })}
+      </Select>
+    )
   )
 }
 export default ObjectSelect

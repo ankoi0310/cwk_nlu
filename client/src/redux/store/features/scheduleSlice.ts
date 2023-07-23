@@ -9,15 +9,15 @@ export const ACTION_TYPE = {
 }
 
 export interface ScheduleState {
-  semesterFilterList: { loading: boolean; data: SemesterFilter[] }
-  objectFilterList: { loading: boolean; data: ObjectFilter[] }
-  schedule: { loading: boolean; data: ScheduleItem[] }
+  semesterFilters: SemesterFilter[] | null
+  objectFilters: ObjectFilter[] | null
+  schedule: ScheduleItem[] | null
 }
 
 const initialState: ScheduleState = {
-  semesterFilterList: { loading: false, data: [] },
-  objectFilterList: { loading: false, data: [] },
-  schedule: { loading: false, data: [] },
+  semesterFilters: null,
+  objectFilters: null,
+  schedule: null,
 }
 
 /*---------- Lấy danh sách lọc học kỳ ----------*/
@@ -63,6 +63,10 @@ const getSchedule = createAsyncThunk(ACTION_TYPE.GET_SCHEDULE, async (data: any,
       data: data,
     })
 
+    if (!response.data.result) {
+      return thunkAPI.rejectWithValue(response.data.message)
+    }
+
     return thunkAPI.fulfillWithValue(response)
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
@@ -76,35 +80,14 @@ export const ScheduleSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(getSemesterFilterList.pending, state => {
-        state.semesterFilterList.loading = true
-      })
       .addCase(getSemesterFilterList.fulfilled, (state, action) => {
-        state.semesterFilterList.loading = false
-        state.semesterFilterList.data = action.payload.data.data.ds_hoc_ky
-      })
-      .addCase(getSemesterFilterList.rejected, state => {
-        state.semesterFilterList.loading = false
-      })
-      .addCase(getObjectFilterList.pending, state => {
-        state.objectFilterList.loading = true
+        state.semesterFilters = action.payload.data.data.ds_hoc_ky
       })
       .addCase(getObjectFilterList.fulfilled, (state, action) => {
-        state.objectFilterList.loading = false
-        state.objectFilterList.data = action.payload.data.data.ds_doi_tuong_tkb
-      })
-      .addCase(getObjectFilterList.rejected, state => {
-        state.objectFilterList.loading = false
-      })
-      .addCase(getSchedule.pending, state => {
-        state.schedule.loading = true
+        state.objectFilters = action.payload.data.data.ds_doi_tuong_tkb
       })
       .addCase(getSchedule.fulfilled, (state, action) => {
-        state.schedule.loading = false
-        state.schedule.data = action.payload.data.data.ds_nhom_to
-      })
-      .addCase(getSchedule.rejected, state => {
-        state.schedule.loading = false
+        state.schedule = action.payload.data.data.ds_nhom_to
       })
   },
 })

@@ -14,51 +14,31 @@ import ObjectSelect from 'components/Schedule/ObjectSelect'
 import SemesterSelect from 'components/Schedule/SemesterSelect'
 import React, { FC, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/store'
-import { getObjectFilterList, getSchedule, getSemesterFilterList } from 'redux/store/features/scheduleSlice'
+import { getSchedule } from 'redux/store/features/scheduleSlice'
 
 interface ScheduleProps {}
 
 const Schedule: FC<ScheduleProps> = () => {
-  const { semesterFilterList, objectFilterList, schedule } = useAppSelector(state => state.schedule)
+  const { schedule, semesterFilters, objectFilters } = useAppSelector(state => state.schedule)
   const dispatch = useAppDispatch()
   const [semester, setSemester] = useState('')
   const [object, setObject] = useState('')
 
   useEffect(() => {
-    const loadSemesterFilterList = async () => {
-      await dispatch(
-        getSemesterFilterList({
-          filter: {
-            is_tieng_anh: null,
-          },
-          additional: {
-            paging: {
-              limit: 100,
-              page: 1,
-            },
-            ordering: [
-              {
-                name: 'hoc_ky',
-                order_type: 1,
-              },
-            ],
-          },
-        }),
-      )
-    }
-
-    loadSemesterFilterList()
-
-    const loadObjectFilterList = async () => {
-      await dispatch(getObjectFilterList({}))
-    }
-
-    loadObjectFilterList()
-
     const loadSchedule = async () => {
+      if (semesterFilters && semester === '') {
+        setSemester(semesterFilters[0].hoc_ky.toString())
+      }
+
+      if (objectFilters && object === '') {
+        setObject(objectFilters[0].loai_doi_tuong.toString())
+      }
+
+      if (semester === '' && object === '') return
+
       await dispatch(
         getSchedule({
-          hoc_ky: semester,
+          hoc_ky: semester.toString(),
           id_du_lieu: null,
           loai_doi_tuong: parseInt(object),
         }),
@@ -66,15 +46,7 @@ const Schedule: FC<ScheduleProps> = () => {
     }
 
     loadSchedule()
-
-    if (semesterFilterList.data && semesterFilterList.data.length !== 0) {
-      setSemester(semesterFilterList.data[0].hoc_ky.toString())
-    }
-
-    if (objectFilterList.data && objectFilterList.data.length !== 0) {
-      setObject(objectFilterList.data[0].loai_doi_tuong.toString())
-    }
-  }, [semester, object])
+  }, [semesterFilters, semester, objectFilters, object])
 
   return (
     <Box className={'flex flex-col gap-y-4'}>
@@ -87,20 +59,12 @@ const Schedule: FC<ScheduleProps> = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={5}>
             <FormControl size="small" fullWidth>
-              {semesterFilterList.data && (
-                <SemesterSelect
-                  value={semester}
-                  items={semesterFilterList.data}
-                  setValue={value => setSemester(value)}
-                />
-              )}
+              <SemesterSelect value={semester} handleChange={value => setSemester(value)} />
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={5}>
             <FormControl size="small" fullWidth>
-              {objectFilterList.data && (
-                <ObjectSelect value={object} items={objectFilterList.data} setValue={value => setObject(value)} />
-              )}
+              <ObjectSelect value={object} handleChange={value => setObject(value)} />
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={2} className={'flex justify-center items-center'}>
@@ -124,7 +88,7 @@ const Schedule: FC<ScheduleProps> = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {schedule.data && schedule.data.map((item: ScheduleItem, index) => <Row scheduleItem={item} key={index} />)}
+            {schedule && schedule.map((item: ScheduleItem, index) => <Row scheduleItem={item} key={index} />)}
           </TableBody>
         </Table>
       </TableContainer>
