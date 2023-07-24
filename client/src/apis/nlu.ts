@@ -7,29 +7,18 @@ const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
 })
 
-axiosInstance.interceptors.request.use(
-  async config => {
-    const persistStorage = await storage.getItem('persist:root')
-    const { auth } = JSON.parse(persistStorage || '{}')
-    const { user } = JSON.parse(auth || '{}')
-    const { access_token } = user || {}
+axiosInstance.interceptors.request.use(async function (config) {
+  const persistStorage = await storage.getItem('persist:root')
+  const { auth } = JSON.parse(persistStorage || '{}')
+  const { user, isLogin } = JSON.parse(auth || '{}')
 
-    if (access_token) {
-      config.headers.Authorization = `Bearer ${access_token}`
-    }
-    return config
-  },
-  async error => await Promise.reject(error),
-)
+  if (!isLogin) return config
 
-axiosInstance.interceptors.response.use(
-  response => {
-    return response.data
-  },
-  async error => await Promise.reject(error),
-)
+  config.headers.Authorization = `Bearer ${user?.access_token}`
+  return config
+})
 
 export default axiosInstance
