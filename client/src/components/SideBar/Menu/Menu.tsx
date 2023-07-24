@@ -35,68 +35,66 @@ const Menu = () => {
       />
       <CardContent className={'p-0'}>
         <MenuList>
-          {isLogin && (
-            <>
-              <Link to={'education-program'}>
-                <MenuItem>
-                  <ListItemIcon>
-                    <AccountTree fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Xem chương trình đào tạo</ListItemText>
-                </MenuItem>
-              </Link>
-              <Link to={'course-registration'}>
-                <MenuItem>
-                  <ListItemIcon>
-                    <AddToQueue fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Đăng ký môn học</ListItemText>
-                </MenuItem>
-              </Link>
-              <Link to={'course-cancellation'}>
-                <MenuItem>
-                  <ListItemIcon>
-                    <RemoveFromQueue fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Rút môn học đã đăng ký</ListItemText>
-                </MenuItem>
-              </Link>
-              <Link to={'schedule'}>
-                <MenuItem>
-                  <ListItemIcon>
-                    <CalendarMonth fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Xem thời khoá biểu</ListItemText>
-                </MenuItem>
-              </Link>
-              <Link to={'exam-schedule'}>
-                <MenuItem>
-                  <ListItemIcon>
-                    <EventNote fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Xem lịch thi</ListItemText>
-                </MenuItem>
-              </Link>
-              <Link to={'transcript'}>
-                <MenuItem>
-                  <ListItemIcon>
-                    <ListAlt fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Xem điểm</ListItemText>
-                </MenuItem>
-              </Link>
-              <Link to={'tuition'}>
-                <MenuItem>
-                  <ListItemIcon>
-                    <Paid fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Xem học phí</ListItemText>
-                </MenuItem>
-              </Link>
+          {isLogin && [
+            <Link key={'education-program'} to={'education-program'}>
+              <MenuItem>
+                <ListItemIcon>
+                  <AccountTree fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Xem chương trình đào tạo</ListItemText>
+              </MenuItem>
+            </Link>,
+            <Link key={'course-registration'} to={'course-registration'}>
+              <MenuItem>
+                <ListItemIcon>
+                  <AddToQueue fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Đăng ký môn học</ListItemText>
+              </MenuItem>
+            </Link>,
+            <Link key={'course-cancellation'} to={'course-cancellation'}>
+              <MenuItem>
+                <ListItemIcon>
+                  <RemoveFromQueue fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Rút môn học đã đăng ký</ListItemText>
+              </MenuItem>
+            </Link>,
+            <Link key={'schedule'} to={'schedule'}>
+              <MenuItem>
+                <ListItemIcon>
+                  <CalendarMonth fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Xem thời khoá biểu</ListItemText>
+              </MenuItem>
+            </Link>,
+            <Link key={'exam-schedule'} to={'exam-schedule'}>
+              <MenuItem>
+                <ListItemIcon>
+                  <EventNote fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Xem lịch thi</ListItemText>
+              </MenuItem>
+            </Link>,
+            <Link key={'transcript'} to={'transcript'}>
+              <MenuItem>
+                <ListItemIcon>
+                  <ListAlt fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Xem điểm</ListItemText>
+              </MenuItem>
+            </Link>,
+            <Link key={'tuition'} to={'tuition'}>
+              <MenuItem>
+                <ListItemIcon>
+                  <Paid fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Xem học phí</ListItemText>
+              </MenuItem>
+            </Link>,
 
-              <Divider />
-            </>
-          )}
+            <Divider key={'divider'} />,
+          ]}
 
           <Link to={'survey'}>
             <MenuItem>
