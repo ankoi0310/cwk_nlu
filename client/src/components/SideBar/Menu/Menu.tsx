@@ -19,8 +19,11 @@ import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useAppSelector } from 'redux/store'
 
 const Menu = () => {
+  const { isLogin } = useAppSelector(state => state.auth)
+
   return (
     <Card variant="outlined" className={'shadow-md'}>
       <CardHeader
@@ -32,64 +35,68 @@ const Menu = () => {
       />
       <CardContent className={'p-0'}>
         <MenuList>
-          <Link to={'education-program'}>
-            <MenuItem>
-              <ListItemIcon>
-                <AccountTree fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Xem chương trình đào tạo</ListItemText>
-            </MenuItem>
-          </Link>
-          <Link to={'course-registration'}>
-            <MenuItem>
-              <ListItemIcon>
-                <AddToQueue fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Đăng ký môn học</ListItemText>
-            </MenuItem>
-          </Link>
-          <Link to={'course-cancellation'}>
-            <MenuItem>
-              <ListItemIcon>
-                <RemoveFromQueue fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Rút môn học đã đăng ký</ListItemText>
-            </MenuItem>
-          </Link>
-          <Link to={'schedule'}>
-            <MenuItem>
-              <ListItemIcon>
-                <CalendarMonth fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Xem thời khoá biểu</ListItemText>
-            </MenuItem>
-          </Link>
-          <Link to={'exam-schedule'}>
-            <MenuItem>
-              <ListItemIcon>
-                <EventNote fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Xem lịch thi</ListItemText>
-            </MenuItem>
-          </Link>
-          <Link to={'transcript'}>
-            <MenuItem>
-              <ListItemIcon>
-                <ListAlt fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Xem điểm</ListItemText>
-            </MenuItem>
-          </Link>
-          <Link to={'tuition'}>
-            <MenuItem>
-              <ListItemIcon>
-                <Paid fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Xem học phí</ListItemText>
-            </MenuItem>
-          </Link>
+          {isLogin && (
+            <>
+              <Link to={'education-program'}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <AccountTree fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Xem chương trình đào tạo</ListItemText>
+                </MenuItem>
+              </Link>
+              <Link to={'course-registration'}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <AddToQueue fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Đăng ký môn học</ListItemText>
+                </MenuItem>
+              </Link>
+              <Link to={'course-cancellation'}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <RemoveFromQueue fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Rút môn học đã đăng ký</ListItemText>
+                </MenuItem>
+              </Link>
+              <Link to={'schedule'}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <CalendarMonth fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Xem thời khoá biểu</ListItemText>
+                </MenuItem>
+              </Link>
+              <Link to={'exam-schedule'}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <EventNote fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Xem lịch thi</ListItemText>
+                </MenuItem>
+              </Link>
+              <Link to={'transcript'}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <ListAlt fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Xem điểm</ListItemText>
+                </MenuItem>
+              </Link>
+              <Link to={'tuition'}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <Paid fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Xem học phí</ListItemText>
+                </MenuItem>
+              </Link>
 
-          <Divider />
+              <Divider />
+            </>
+          )}
 
           <Link to={'survey'}>
             <MenuItem>
