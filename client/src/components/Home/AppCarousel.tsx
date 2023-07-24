@@ -52,21 +52,23 @@ const AppCarousel: FC<AppCarouselProps> = () => {
   }, [])
 
   return (
-    <Carousel autoplay loop navigation={() => <></>} className={'rounded-md h-[45vh]'}>
-      {news.data.map((item: any, index) => (
-        <div key={index} className={'h-[45vh] w-full'}>
-          <div className={'absolute top-0 w-full bg-black/50 flex justify-end items-center px-2 py-1'}>
-            <div className={'text-white text-[14px] italic'}>
-              {moment(item.ngay_dang_tin).format('DD/MM/YYYY HH:mm')}
+    news && (
+      <Carousel autoplay loop navigation={() => <></>} className={'rounded-md h-[45vh]'}>
+        {news.map((item: Post, index) => (
+          <div key={index} className={'h-[45vh] w-full'}>
+            <div className={'absolute top-0 w-full bg-black/50 flex justify-end items-center px-2 py-1'}>
+              <div className={'text-white text-[14px] italic'}>
+                {moment(item.ngay_dang_tin).format('DD/MM/YYYY HH:mm')}
+              </div>
             </div>
+            <div className={'absolute bottom-0 w-full bg-black/50 flex justify-center items-center p-2'}>
+              <div className={'text-white text-center text-[14px] font-bold'}>{item.tieu_de}</div>
+            </div>
+            <img src={item.hinh_dai_dien} alt={`News ${index}`} className={'h-full w-full object-cover'} />
           </div>
-          <div className={'absolute bottom-0 w-full bg-black/50 flex justify-center items-center p-2'}>
-            <div className={'text-white text-center text-[14px] font-bold'}>{item.tieu_de}</div>
-          </div>
-          <img src={item.hinh_dai_dien} alt={`News ${index}`} className={'h-full w-full object-cover'} />
-        </div>
-      ))}
-    </Carousel>
+        ))}
+      </Carousel>
+    )
   )
 }
 

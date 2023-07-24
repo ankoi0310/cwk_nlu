@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
-import { UserInfo } from 'type/model/user'
 
 export const ACTION_TYPE = {
   GET_USER_INFO: 'GET_USER_INFO',
@@ -25,7 +24,7 @@ const getUserInfo = createAsyncThunk(ACTION_TYPE.GET_USER_INFO, async (payload: 
       url: '/dkmh/w-locsinhvieninfo',
     })
 
-    return thunkAPI.fulfillWithValue(response)
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error?.response?.data?.message || 'Lấy thông tin thất bại')
   }
@@ -44,7 +43,7 @@ export const UserSlice = createSlice({
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
         state.loading = false
-        state.userInfo = action.payload.data.data
+        state.userInfo = action.payload.data
         return state
       })
       .addCase(getUserInfo.rejected, state => {

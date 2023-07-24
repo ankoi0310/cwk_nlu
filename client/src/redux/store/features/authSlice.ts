@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
 import storage from 'redux-persist/lib/storage'
-import { RootState } from 'redux/store'
-import { UserLoginResponse } from 'type/model/user'
 import MySwal from 'utils/custom/MySwal'
 
 export const ACTION_TYPE = {
@@ -34,7 +32,7 @@ const login = createAsyncThunk(ACTION_TYPE.AUTH_LOGIN, async (payload: any, thun
 
     return thunkAPI.fulfillWithValue(response)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || 'Đăng nhập thất bại')
+    return thunkAPI.rejectWithValue(error.response?.data?.message || 'Đăng nhập thất bại')
   }
 })
 
@@ -48,7 +46,7 @@ const logout = createAsyncThunk(ACTION_TYPE.AUTH_LOGOUT, async (payload: any, th
 
     return thunkAPI.fulfillWithValue(response)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || 'Có lỗi xảy ra khi đăng xuất')
+    return thunkAPI.rejectWithValue(error.response?.data?.message || 'Có lỗi xảy ra khi đăng xuất')
   }
 })
 
@@ -73,7 +71,7 @@ export const AuthSlice = createSlice({
           title: 'Đăng nhập thành công',
           showConfirmButton: false,
           timer: 1500,
-        }).then((_: any) => {})
+        }).then(() => {})
         return state
       })
       .addCase(login.rejected, (state, action) => {
@@ -107,4 +105,3 @@ export const AuthSlice = createSlice({
 })
 
 export { login, logout }
-export const getCurrentToken = (state: RootState) => state.auth.user?.access_token || null

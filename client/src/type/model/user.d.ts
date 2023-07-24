@@ -1,4 +1,4 @@
-export class UserLoginResponse {
+declare class UserLoginResponse {
   access_token: string
   token_type: string
   expires_in: number
@@ -17,7 +17,7 @@ export class UserLoginResponse {
   '.expires': string
 }
 
-export class UserInfo {
+declare class UserInfo {
   'thoi_gian_get_data': string
   'ma_sv': string
   'ten_day_du': string

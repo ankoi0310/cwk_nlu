@@ -30,7 +30,7 @@ const getSemesterFilterList = createAsyncThunk(ACTION_TYPE.GET_SEMESTER_FILTER_L
       data: data,
     })
 
-    return thunkAPI.fulfillWithValue(response)
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
   }
@@ -46,7 +46,7 @@ const getObjectFilterList = createAsyncThunk(ACTION_TYPE.GET_OBJECT_FILTER_LIST,
       url: '/sch/w-locdsdoituongthoikhoabieuhocky',
     })
 
-    return thunkAPI.fulfillWithValue(response)
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
   }
@@ -67,7 +67,7 @@ const getSchedule = createAsyncThunk(ACTION_TYPE.GET_SCHEDULE, async (data: any,
       return thunkAPI.rejectWithValue(response.data.message)
     }
 
-    return thunkAPI.fulfillWithValue(response)
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
   }
@@ -81,13 +81,13 @@ export const ScheduleSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getSemesterFilterList.fulfilled, (state, action) => {
-        state.semesterFilters = action.payload.data.data.ds_hoc_ky
+        state.semesterFilters = action.payload.data.ds_hoc_ky
       })
       .addCase(getObjectFilterList.fulfilled, (state, action) => {
-        state.objectFilters = action.payload.data.data.ds_doi_tuong_tkb
+        state.objectFilters = action.payload.data.ds_doi_tuong_tkb
       })
       .addCase(getSchedule.fulfilled, (state, action) => {
-        state.schedule = action.payload.data.data.ds_nhom_to
+        state.schedule = action.payload.data.ds_nhom_to
       })
   },
 })

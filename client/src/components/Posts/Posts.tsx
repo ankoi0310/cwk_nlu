@@ -1,18 +1,18 @@
 import { LabelImportant } from '@mui/icons-material'
-import { CircularProgress, List, ListItem } from '@mui/material'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
+import { List, ListItem } from '@mui/material'
 import Box from '@mui/material/Box'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Tab from '@mui/material/Tab'
+import classNames from 'classnames/bind'
 import React, { SyntheticEvent, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../redux/store'
-import { getGuide, getNotification, getTuition } from '../../redux/store/features/webSlice'
+import { useAppDispatch, useAppSelector } from 'redux/store'
+import { getGuide, getNotification, getTuition } from 'redux/store/features/webSlice'
 import styles from './Posts.module.css'
-import classNames from 'classnames/bind'
 
 const cx = classNames.bind(styles)
 
@@ -138,13 +138,11 @@ const Posts = () => {
             ))}
           </TabList>
         </Box>
-        {notification.loading || guide.loading || tuition.loading ? (
-          <CircularProgress color="primary" />
-        ) : (
+        {notification && guide && tuition && (
           <>
             <TabPanel value="notification" className={'py-0'}>
               <List dense>
-                {notification.data.map((item: any, index) => (
+                {notification.map((item: Post, index) => (
                   <ListItem key={index} disablePadding>
                     <Link to={`/post/${item.id}`} className={cx('flex text-link items-center')}>
                       <ListItemIcon className={'min-w-fit mr-2'}>
@@ -158,7 +156,7 @@ const Posts = () => {
             </TabPanel>
             <TabPanel value="guide" className={'py-0'}>
               <List dense>
-                {guide.data.map((item: any, index) => (
+                {guide.map((item: Post, index) => (
                   <ListItem key={index} disablePadding>
                     <Link to={`/post/${item.id}`} className={cx('flex text-link items-center')}>
                       <ListItemIcon className={'min-w-fit mr-2'}>
@@ -172,7 +170,7 @@ const Posts = () => {
             </TabPanel>
             <TabPanel value="tuition" className={'py-0'}>
               <List dense>
-                {tuition.data.map((item: any, index) => (
+                {tuition.map((item: Post, index) => (
                   <ListItem key={index} disablePadding>
                     <Link to={`/post/${item.id}`} className={cx('flex text-link items-center')}>
                       <ListItemIcon className={'min-w-fit mr-2'}>

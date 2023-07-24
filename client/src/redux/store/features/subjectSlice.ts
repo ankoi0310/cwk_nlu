@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
+import { Course, Subject } from 'type/model/course'
 
 export const ACTION_TYPE = {
   GET_SUBJECT_FILTER: 'GET_SUBJECT_FILTER',
@@ -10,19 +11,16 @@ export const ACTION_TYPE = {
 
 export interface SubjectState {
   filter: any
-  subjects: Subject[]
-  courses: Course[]
-  registrationResult: any
+  subjects: Subject[] | null
+  courses: Course[] | null
+  registerSuccess: boolean
 }
 
 const initialState: SubjectState = {
   filter: null,
-  subjects: [],
-  courses: [],
-  registrationResult: {
-    loading: false,
-    success: false,
-  },
+  subjects: null,
+  courses: null,
+  registerSuccess: false,
 }
 
 /*---------- Lấy danh sách nhóm/tổ môn học ----------*/
@@ -35,7 +33,7 @@ const getCourses = createAsyncThunk(ACTION_TYPE.GET_COURSE_LIST, async (data: an
       data: data,
     })
 
-    return thunkAPI.fulfillWithValue(response)
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
   }
@@ -52,7 +50,7 @@ const registerCourse = createAsyncThunk(ACTION_TYPE.REGISTER_COURSE, async (data
       data: data,
     })
 
-    return thunkAPI.fulfillWithValue(response)
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
   }
@@ -65,27 +63,13 @@ export const SubjectSlice = createSlice({
   extraReducers: builder => {
     builder
       // get subject filter
-      .addCase(getCourses.pending, state => {
-        state.courses = []
-      })
       .addCase(getCourses.fulfilled, (state, action) => {
-        state.subjects = (action.payload.data.data as CourseData).ds_mon_hoc
-        state.courses = (action.payload.data.data as CourseData).ds_nhom_to
-      })
-      .addCase(getCourses.rejected, state => {
-        state.courses = []
+        state.subjects = action.payload.data.ds_mon_hoc
+        state.courses = action.payload.data.ds_nhom_to
       })
       // registration result
-      .addCase(registerCourse.pending, state => {
-        state.registrationResult.loading = true
-      })
       .addCase(registerCourse.fulfilled, (state, action) => {
-        state.registrationResult.loading = false
-        state.registrationResult.success = true
-      })
-      .addCase(registerCourse.rejected, state => {
-        state.registrationResult.loading = false
-        state.registrationResult.success = false
+        state.registerSuccess = action.payload.data.is_thanh_cong
       })
   },
 })

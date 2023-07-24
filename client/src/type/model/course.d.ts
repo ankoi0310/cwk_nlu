@@ -65,3 +65,17 @@ declare class CourseData {
   ds_mon_hoc: Subject[]
   ds_nhom_to: Course[]
 }
+
+export class CourseRegistrationResult {
+  is_thanh_cong: boolean
+  thong_bao_loi: string
+  is_chung_nhom_mon_hoc: boolean
+  is_show_nganh_hoc: boolean
+  ket_qua_dang_ky: {
+    id_kqdk: string
+    ngay_dang_ky: string
+    is_da_rut_mon_hoc: boolean
+    enable_xoa: boolean
+    hoc_phi_tam_tinh: number
+  }
+}

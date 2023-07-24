@@ -12,15 +12,11 @@ import Typography from '@mui/material/Typography'
 import React, { FC, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/store'
 import { getCourses } from 'redux/store/features/subjectSlice'
-import styles from './CourseRegistration.module.css'
-import classNames from 'classnames/bind'
-
-const cx = classNames.bind(styles)
 
 interface CourseRegistrationProps {}
 
 const CourseRegistration: FC<CourseRegistrationProps> = () => {
-  const { subjects, courses, registrationResult } = useAppSelector(state => state.subject)
+  const { subjects, courses } = useAppSelector(state => state.subject)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -91,6 +87,7 @@ const CourseRegistration: FC<CourseRegistrationProps> = () => {
               <TableCell></TableCell>
             </TableRow>
             {courses &&
+              subjects &&
               courses.map((course, index) => (
                 <TableRow key={index}>
                   <TableCell padding="checkbox">

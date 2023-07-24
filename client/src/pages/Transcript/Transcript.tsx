@@ -25,7 +25,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 interface TranscriptProps {}
 
 const Transcript: FC<TranscriptProps> = () => {
-  const { transcript } = useAppSelector(state => state.transcript)
+  const { transcriptResponse } = useAppSelector(state => state.transcript)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -63,8 +63,8 @@ const Transcript: FC<TranscriptProps> = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {transcript &&
-            transcript.ds_diem_hocky.map((semester, index) => (
+          {transcriptResponse &&
+            transcriptResponse.ds_diem_hocky.map((semester, index) => (
               <React.Fragment key={index}>
                 <TableRow>
                   <StyledTableCell colSpan={12}>

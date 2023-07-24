@@ -15,8 +15,10 @@ import TextField from '@mui/material/TextField'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { VscLoading } from 'react-icons/vsc'
+import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'redux/store'
 import { ACTION_TYPE, login, logout } from 'redux/store/features/authSlice'
+import MySwal from 'utils/custom/MySwal'
 import { usernameRegex } from 'utils/validation/formValidation'
 import * as yup from 'yup'
 
@@ -29,6 +31,7 @@ type Inputs = {
 const LoginForm = () => {
   const { loading, isLogin, user } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [error, setError] = useState<any>(null)
 
   const schema = yup.object().shape({
@@ -57,6 +60,20 @@ const LoginForm = () => {
       setError(response.payload)
     } else {
       setError(null)
+      setTimeout(() => {
+        onLogout()
+
+        MySwal.fire({
+          icon: 'warning',
+          title: 'Phiên đăng nhập đã hết hạn',
+          text: 'Vui lòng đăng nhập lại',
+          showConfirmButton: true,
+          showCloseButton: true,
+          allowOutsideClick: false,
+        }).then(() => {
+          navigate('home')
+        })
+      }, (response.payload as any).data.expires_in * 1000) // 1800s * 1000 = 30 minutes
     }
   }
 

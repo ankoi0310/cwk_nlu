@@ -1,11 +1,11 @@
-export class TranscriptResponse {
+declare class TranscriptResponse {
   total_items: number
   total_pages: number
   is_kkbd: boolean
   ds_diem_hocky: SemesterScore[]
 }
 
-export class SemesterScore {
+declare class SemesterScore {
   loai_nganh: number
   hoc_ky: string
   ten_hoc_ky: string
@@ -20,7 +20,7 @@ export class SemesterScore {
   ds_diem_mon_hoc: SubjectScore[]
 }
 
-export class SubjectScore {
+declare class SubjectScore {
   ma_mon: string
   ma_mon_tt: string
   nhom_to: string
@@ -39,7 +39,7 @@ export class SubjectScore {
   ds_diem_thanh_phan: SubjectScoreDetail[]
 }
 
-export class SubjectScoreDetail {
+declare class SubjectScoreDetail {
   ky_hieu: string
   ten_thanh_phan: string
   trong_so: string

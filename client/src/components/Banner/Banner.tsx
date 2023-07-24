@@ -42,10 +42,6 @@ const Banner = () => {
     }
   }, [])
 
-  return (
-    <div className={''}>
-      {!!banner.data && <img src={banner.data.hinh_dai_dien} alt="banner" className={'w-full'} />}
-    </div>
-  )
+  return <div className={''}>{banner && <img src={banner.hinh_dai_dien} alt="banner" className={'w-full'} />}</div>
 }
 export default Banner
