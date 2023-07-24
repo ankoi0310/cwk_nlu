@@ -42,9 +42,9 @@ router.post(
         },
       })
 
-      return response.json(res.data)
+      return response.status(res.status).json(res.data)
     } catch (error: any) {
-      return response.json(error?.response?.data || error)
+      return response.status(error.response.status).json(error.response?.data || error)
     }
   }),
 )
@@ -65,9 +65,9 @@ router.post(
         data: request.body,
       })
 
-      return response.json(res.data)
+      return response.status(res.status).json(res.data)
     } catch (error: any) {
-      return response.json(error?.response?.data || error)
+      return response.status(error.response.status).json(error.response?.data || error)
     }
   }),
 )
@@ -88,9 +88,9 @@ router.post(
         data: request.body,
       })
 
-      return response.json(res.data)
+      return response.status(res.status).json(res.data)
     } catch (error: any) {
-      return response.json(error?.response?.data || error)
+      return response.status(error.response.status).json(error.response?.data || error)
     }
   }),
 )
