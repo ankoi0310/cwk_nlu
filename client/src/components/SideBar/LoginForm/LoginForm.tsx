@@ -33,6 +33,7 @@ const LoginForm = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [error, setError] = useState<any>(null)
+  const [logoutAfterExpired, setLogoutAfterExpired] = useState<NodeJS.Timeout | null>(null)
 
   const schema = yup.object().shape({
     username: yup
@@ -60,24 +61,27 @@ const LoginForm = () => {
       setError(response.payload)
     } else {
       setError(null)
-      setTimeout(() => {
-        onLogout()
+      setLogoutAfterExpired(
+        setTimeout(() => {
+          onLogout()
 
-        MySwal.fire({
-          icon: 'warning',
-          title: 'Phiên đăng nhập đã hết hạn',
-          text: 'Vui lòng đăng nhập lại',
-          showConfirmButton: true,
-          showCloseButton: true,
-          allowOutsideClick: false,
-        }).then(() => {
-          navigate('home')
-        })
-      }, (response.payload as any).data.expires_in * 1000) // 1800s * 1000 = 30 minutes
+          MySwal.fire({
+            icon: 'warning',
+            title: 'Phiên đăng nhập đã hết hạn',
+            text: 'Vui lòng đăng nhập lại',
+            showConfirmButton: true,
+            showCloseButton: true,
+            allowOutsideClick: false,
+          }).then(() => {
+            navigate('home')
+          })
+        }, (response.payload as any).data.expires_in * 1000),
+      )
     }
   }
 
-  const onLogout = async () => {
+  const onLogout = async (onButtonClick: boolean = false) => {
+    if (onButtonClick && !!logoutAfterExpired) clearTimeout(logoutAfterExpired)
     await dispatch(logout({}))
   }
 
@@ -92,7 +96,7 @@ const LoginForm = () => {
       />
       <CardContent>
         {isLogin && user ? (
-          <form onSubmit={handleLogout(() => onLogout())}>
+          <form onSubmit={handleLogout(() => onLogout(true))}>
             <Box className={'flex flex-col'}>
               <List>
                 <ListItem>
