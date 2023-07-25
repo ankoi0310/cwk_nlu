@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
-import storage from 'redux-persist/lib/storage'
 import MySwal from 'utils/custom/MySwal'
 
 export const ACTION_TYPE = {
@@ -53,7 +52,9 @@ const logout = createAsyncThunk(ACTION_TYPE.AUTH_LOGOUT, async (payload: any, th
 export const AuthSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState,
+  },
   extraReducers: builder => {
     builder
       // login
@@ -74,17 +75,8 @@ export const AuthSlice = createSlice({
         }).then(() => {})
         return state
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, state => {
         state.loading = false
-        storage.setItem(
-          'persist:root',
-          JSON.stringify({
-            auth: {
-              ...state,
-              error: action.payload,
-            },
-          }),
-        )
         return state
       })
       // logout
@@ -94,7 +86,6 @@ export const AuthSlice = createSlice({
       })
       .addCase(logout.fulfilled, state => {
         state = initialState
-        storage.removeItem('persist:root')
         return state
       })
       .addCase(logout.rejected, state => {
@@ -104,4 +95,5 @@ export const AuthSlice = createSlice({
   },
 })
 
+export const { reset } = AuthSlice.actions
 export { login, logout }
