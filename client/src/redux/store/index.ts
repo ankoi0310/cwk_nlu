@@ -12,7 +12,7 @@ import { ScheduleSlice } from 'redux/store/features/scheduleSlice'
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'user'],
+  whitelist: ['auth'],
 }
 
 const rootReducer = combineReducers({
