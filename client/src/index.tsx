@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@mui/material'
 import { ThemeProvider as ThemeProvider2 } from '@material-tailwind/react'
+import { PrimeReactProvider } from 'primereact/api'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
@@ -17,7 +18,9 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={theme}>
           <ThemeProvider2>
-            <App/>
+            <PrimeReactProvider>
+              <App/>
+            </PrimeReactProvider>
           </ThemeProvider2>
         </ThemeProvider>
       </PersistGate>

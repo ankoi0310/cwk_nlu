@@ -46,7 +46,7 @@ declare class Course {
   is_kg_huy_kqdk: boolean
 }
 
-declare class CourseData {
+declare class CourseResponse {
   total_items: number
   total_pages: number
   dien_giai_enable_chung: string

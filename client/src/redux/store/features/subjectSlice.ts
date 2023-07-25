@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
-import { Course, Subject } from 'type/model/course'
+import { Course, CourseResponse, Subject } from 'type/model/course'
 
 export const ACTION_TYPE = {
   GET_SUBJECT_FILTER: 'GET_SUBJECT_FILTER',
@@ -11,6 +11,7 @@ export const ACTION_TYPE = {
 
 export interface SubjectState {
   filter: any
+  courseResponse: CourseResponse | null
   subjects: Subject[] | null
   courses: Course[] | null
   registerSuccess: boolean
@@ -18,6 +19,7 @@ export interface SubjectState {
 
 const initialState: SubjectState = {
   filter: null,
+  courseResponse: null,
   subjects: null,
   courses: null,
   registerSuccess: false,
@@ -64,8 +66,16 @@ export const SubjectSlice = createSlice({
     builder
       // get subject filter
       .addCase(getCourses.fulfilled, (state, action) => {
-        state.subjects = action.payload.data.ds_mon_hoc
-        state.courses = action.payload.data.ds_nhom_to
+        state.courseResponse = action.payload.data
+        const subjects = action.payload.data.ds_mon_hoc as Subject[]
+        const courses = action.payload.data.ds_nhom_to as Course[]
+
+        courses.forEach(course => {
+          course.ten_mon = subjects.find(subject => subject.ma === course.ma_mon)?.ten || ''
+        })
+
+        state.subjects = subjects
+        state.courses = courses
       })
       // registration result
       .addCase(registerCourse.fulfilled, (state, action) => {
