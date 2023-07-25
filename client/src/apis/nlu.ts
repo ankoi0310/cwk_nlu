@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { useJwt } from 'react-jwt'
+import { isExpired } from 'react-jwt'
 import storage from 'redux-persist/lib/storage'
+import { persistor } from 'redux/store'
 
 const BASE_URL = 'https://nlu-server.huynhvanhuuan.id.vn/api'
 
@@ -21,11 +22,10 @@ axiosInstance.interceptors.request.use(async function (config) {
 
     if (token) {
       // check jwt token expired
-      const { isExpired } = useJwt(token)
-
-      console.log('isExpired', isExpired)
-
-      if (isExpired) {
+      if (isExpired(token)) {
+        config.headers.Authorization = ''
+        persistor.pause()
+        persistor.flush().then(async () => await persistor.purge())
         storage.setItem(
           'persist:root',
           JSON.stringify({
