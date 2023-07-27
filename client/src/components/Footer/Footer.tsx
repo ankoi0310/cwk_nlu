@@ -33,8 +33,8 @@ const Footer: FC<FooterProps> = () => {
                 Trang web được xây dựng và sử dụng dữ liệu từ{' '}
                 <Link to={'https://dkmh.hcmuaf.edu.vn/'} target="_blank" className="text-blue-600">
                   trang Đăng ký môn học - Trường Đại học Nông Lâm TP.HCM
-                </Link>
-                , được xây dựng bởi Huỳnh Văn Hữu Ân (Koi), sinh viên Khoa Công nghệ thông tin
+                </Link>{' '}
+                bởi Huỳnh Văn Hữu Ân (Koi), sinh viên Khoa Công nghệ thông tin
               </q>
             </p>
           </div>
