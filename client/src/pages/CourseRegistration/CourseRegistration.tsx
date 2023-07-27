@@ -12,7 +12,6 @@ import { DataTable, DataTableFilterMeta } from 'primereact/datatable'
 import React, { FC, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/store'
 import { getCourses } from 'redux/store/features/subjectSlice'
-import { Course } from 'type/model/course'
 
 interface CourseRegistrationProps {}
 

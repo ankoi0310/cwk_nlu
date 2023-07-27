@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from 'apis/nlu'
 import useAxios from 'hooks/useAxios'
-import { Course, CourseResponse, Subject } from 'type/model/course'
 
 export const ACTION_TYPE = {
   GET_SUBJECT_FILTER: 'GET_SUBJECT_FILTER',
@@ -12,7 +11,7 @@ export const ACTION_TYPE = {
 export interface SubjectState {
   filter: any
   courseResponse: CourseResponse | null
-  subjects: Subject[] | null
+  subjects: CourseSubject[] | null
   courses: Course[] | null
   registerSuccess: boolean
 }

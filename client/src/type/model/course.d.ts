@@ -1,14 +1,14 @@
-declare class Faculty {
+declare class CourseFaculty {
   ma: string
   ten: string
 }
 
-declare class Class {
+declare class CourseClass {
   ma: string
   ten: string
 }
 
-declare class Subject {
+declare class CourseSubject {
   ma: string
   ten: string
 }
@@ -60,13 +60,13 @@ declare class CourseResponse {
   hien_thi_cot_lich_thi: boolean
   hoc_ky_dang_ky: string
   is_show_tietbd: boolean
-  ds_khoa: Faculty[]
-  ds_lop: Class[]
-  ds_mon_hoc: Subject[]
+  ds_khoa: CourseFaculty[]
+  ds_lop: CourseClass[]
+  ds_mon_hoc: CourseSubject[]
   ds_nhom_to: Course[]
 }
 
-export class CourseRegistrationResult {
+declare class CourseRegistrationResult {
   is_thanh_cong: boolean
   thong_bao_loi: string
   is_chung_nhom_mon_hoc: boolean

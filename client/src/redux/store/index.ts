@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { AuthSlice } from 'redux/store/features/authSlice'
+import { EducationProgramSlice } from 'redux/store/features/educationProgramSlice'
 import { SubjectSlice } from 'redux/store/features/subjectSlice'
 import { UserSlice } from 'redux/store/features/userSlice'
 import { TranscriptSlice } from 'redux/store/features/transcriptSlice'
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   transcript: TranscriptSlice.reducer,
   web: WebSlice.reducer,
   schedule: ScheduleSlice.reducer,
+  educationProgram: EducationProgramSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

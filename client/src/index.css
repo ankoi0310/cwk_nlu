@@ -63,4 +63,8 @@
   .post-icon {
     @apply min-w-fit mr-2;
   }
+
+  .action-button {
+    @apply flex gap-x-1.5 shadow-md border border-gray-300;
+  }
 }
