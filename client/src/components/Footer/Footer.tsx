@@ -4,7 +4,7 @@ import styles from './Footer.module.css'
 import classNames from 'classnames/bind'
 import SocialNetwork from './SocialNetwork'
 import { Link } from 'react-router-dom'
-import darkThemeLogo from 'assets/images/dark_theme_logo.png'
+import lightThemeLogo from 'assets/images/light_theme_logo.png'
 import UsefulLink from './UsefulLink'
 
 const cx = classNames.bind(styles)
@@ -25,7 +25,7 @@ const Footer: FC<FooterProps> = () => {
           {/* <!-- Tailwind Elements section --> */}
           <div className={'lg:col-span-3'}>
             <h6 className={cx('footer-title')}>
-              <img src={darkThemeLogo} alt="logo" className={'w-24 mr-4'} />
+              <img src={lightThemeLogo} alt="logo" className={'w-24 mr-4'} />
               Code With Koi
             </h6>
             <p className={'text-center'}>
