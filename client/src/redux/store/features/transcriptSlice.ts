@@ -24,7 +24,7 @@ const getTranscript = createAsyncThunk(ACTION_TYPE.GET_TRANSCRIPT, async (payloa
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 

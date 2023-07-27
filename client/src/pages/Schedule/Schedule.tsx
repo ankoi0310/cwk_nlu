@@ -9,7 +9,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import Row from 'components/Row/Row'
+import ScheduleRow from 'components/Schedule/ScheduleRow'
 import ObjectSelect from 'components/Schedule/ObjectSelect'
 import SemesterSelect from 'components/Schedule/SemesterSelect'
 import React, { FC, useEffect, useState } from 'react'
@@ -88,7 +88,7 @@ const Schedule: FC<ScheduleProps> = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {schedule && schedule.map((item: ScheduleItem, index) => <Row scheduleItem={item} key={index} />)}
+            {schedule && schedule.map((item: ScheduleItem, index) => <ScheduleRow scheduleItem={item} key={index} />)}
           </TableBody>
         </Table>
       </TableContainer>

@@ -26,7 +26,7 @@ const getUserInfo = createAsyncThunk(ACTION_TYPE.GET_USER_INFO, async (payload: 
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || 'Lấy thông tin thất bại')
+    return thunkAPI.rejectWithValue(error.response?.data?.message || 'Lấy thông tin thất bại')
   }
 })
 

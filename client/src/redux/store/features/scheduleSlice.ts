@@ -32,7 +32,7 @@ const getSemesterFilterList = createAsyncThunk(ACTION_TYPE.GET_SEMESTER_FILTER_L
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 /*--------------------*/
@@ -48,7 +48,7 @@ const getObjectFilterList = createAsyncThunk(ACTION_TYPE.GET_OBJECT_FILTER_LIST,
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 /*--------------------*/
@@ -69,7 +69,7 @@ const getSchedule = createAsyncThunk(ACTION_TYPE.GET_SCHEDULE, async (data: any,
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 /*--------------------*/

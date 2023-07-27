@@ -37,7 +37,7 @@ const getCourses = createAsyncThunk(ACTION_TYPE.GET_COURSE_LIST, async (data: an
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 /*--------------------*/
@@ -54,7 +54,7 @@ const registerCourse = createAsyncThunk(ACTION_TYPE.REGISTER_COURSE, async (data
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error?.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 
@@ -67,7 +67,7 @@ export const SubjectSlice = createSlice({
       // get subject filter
       .addCase(getCourses.fulfilled, (state, action) => {
         state.courseResponse = action.payload.data
-        const subjects = action.payload.data.ds_mon_hoc as Subject[]
+        const subjects = action.payload.data.ds_mon_hoc as CourseSubject[]
         const courses = action.payload.data.ds_nhom_to as Course[]
 
         courses.forEach(course => {

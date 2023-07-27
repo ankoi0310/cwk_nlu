@@ -3,11 +3,11 @@ import { Collapse, IconButton, Table, TableBody, TableCell, TableHead, TableRow,
 import Box from '@mui/material/Box'
 import React, { FC } from 'react'
 
-interface RowProps {
+interface ScheduleRowProps {
   scheduleItem: ScheduleItem
 }
 
-const Row: FC<RowProps> = props => {
+const ScheduleRow: FC<ScheduleRowProps> = props => {
   const { scheduleItem } = props
   const [open, setOpen] = React.useState(false)
 
@@ -65,4 +65,4 @@ const Row: FC<RowProps> = props => {
   )
 }
 
-export default Row
+export default ScheduleRow

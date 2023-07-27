@@ -40,7 +40,7 @@ const getBanner = createAsyncThunk(ACTION_TYPE.BANNER, async (data: any, thunkAP
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 
@@ -59,7 +59,7 @@ const getNews = createAsyncThunk(ACTION_TYPE.NEWS, async (data: any, thunkAPI) =
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 
@@ -69,7 +69,7 @@ const getNotification = createAsyncThunk(ACTION_TYPE.NOTIFICATION, async (data: 
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 
@@ -79,7 +79,7 @@ const getGuide = createAsyncThunk(ACTION_TYPE.GUIDE, async (data: any, thunkAPI)
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 
@@ -89,7 +89,7 @@ const getTuition = createAsyncThunk(ACTION_TYPE.TUITION, async (data: any, thunk
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 
@@ -99,7 +99,7 @@ const getDetail = createAsyncThunk(ACTION_TYPE.DETAIL, async (data: any, thunkAP
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || error?.message)
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
 
