@@ -66,7 +66,7 @@ declare class CourseResponse {
   ds_nhom_to: Course[]
 }
 
-declare class CourseRegistrationResult {
+declare class CourseRegistrationResponse {
   is_thanh_cong: boolean
   thong_bao_loi: string
   is_chung_nhom_mon_hoc: boolean
@@ -79,3 +79,14 @@ declare class CourseRegistrationResult {
     hoc_phi_tam_tinh: number
   }
 }
+
+declare class CourseRegistrationResult {
+  total_items: number
+  total_pages: number
+  so_tin_chi_min: number
+  ngay_in: string
+  is_show_nganh_hoc: boolean
+  ds_kqdkmh: RegisteredCourse[]
+}
+
+declare class RegisteredCourse {}

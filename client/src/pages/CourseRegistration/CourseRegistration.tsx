@@ -1,5 +1,5 @@
 import { Search } from '@mui/icons-material'
-import { List, ListItem, OutlinedInput } from '@mui/material'
+import { CircularProgress, List, ListItem, OutlinedInput } from '@mui/material'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
@@ -121,80 +121,76 @@ const CourseRegistration: FC<CourseRegistrationProps> = () => {
     loadCourses()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (
-    courses && (
-      <Box className={'flex flex-col gap-y-4'}>
-        <Box className={'border-2 rounded-md p-4 py-6'}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={5}>
-              <FormControl size="small" fullWidth></FormControl>
-            </Grid>
+  return courses ? (
+    <Box className={'flex flex-col gap-y-4'}>
+      <Box className={'border-2 rounded-md p-4 py-6'}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={5}>
+            <FormControl size="small" fullWidth></FormControl>
           </Grid>
-        </Box>
-        <Box>
-          <DataTable
-            value={courses}
-            paginator
-            rows={10}
-            dataKey="id_to_hoc"
-            filters={filters}
-            filterDisplay="row"
-            loading={!courses}
-            globalFilterFields={['ma_mon', 'ten_mon', 'lop']}
-            header={header}
-            emptyMessage={
-              <Typography className={'text-center text-gray-500'}>Không có dữ liệu nào được tìm thấy</Typography>
-            }>
-            <Column style={{ width: '2%' }} body={checkboxBodyTemplate} />
-            <Column
-              header="Mã MH"
-              alignHeader={'center'}
-              field="ma_mon"
-              filter
-              showClearButton={false}
-              showFilterMenu={false}
-              style={{ width: '10%' }}
-              className={'text-center'}
-            />
-            <Column
-              header="Tên môn học"
-              alignHeader={'center'}
-              field="ten_mon"
-              filter
-              showClearButton={false}
-              showFilterMenu={false}
-              style={{ width: '25%' }}
-            />
-            <Column header="Nhóm/Tổ" alignHeader={'center'} body={groupBodyTemplate} className={'text-center'} />
-            <Column
-              header="STC"
-              alignHeader={'center'}
-              field="so_tc"
-              style={{ width: '5%' }}
-              className={'text-center'}
-            />
-            <Column
-              header="Lớp"
-              alignHeader={'center'}
-              field="lop"
-              filter
-              showClearButton={false}
-              showFilterMenu={false}
-              style={{ width: '10%' }}
-              className={'text-center'}
-            />
-            <Column
-              header="SL/CL"
-              alignHeader={'center'}
-              style={{ width: '5%' }}
-              body={amountBodyTemplate}
-              className={'text-center'}
-            />
-            <Column header="Thời khoá biểu" alignHeader={'center'} body={scheduleBodyTemplate} />
-          </DataTable>
-        </Box>
+        </Grid>
       </Box>
-    )
+      <Box>
+        <DataTable
+          value={courses}
+          paginator
+          rows={10}
+          dataKey="id_to_hoc"
+          filters={filters}
+          filterDisplay="row"
+          loading={!courses}
+          globalFilterFields={['ma_mon', 'ten_mon', 'lop']}
+          header={header}
+          emptyMessage={
+            <Typography className={'text-center text-gray-500'}>Không có dữ liệu nào được tìm thấy</Typography>
+          }>
+          <Column style={{ width: '2%' }} body={checkboxBodyTemplate} />
+          <Column
+            header="Mã MH"
+            alignHeader={'center'}
+            field="ma_mon"
+            filter
+            showClearButton={false}
+            showFilterMenu={false}
+            style={{ width: '10%' }}
+            className={'text-center'}
+          />
+          <Column
+            header="Tên môn học"
+            alignHeader={'center'}
+            field="ten_mon"
+            filter
+            showClearButton={false}
+            showFilterMenu={false}
+            style={{ width: '25%' }}
+          />
+          <Column header="Nhóm/Tổ" alignHeader={'center'} body={groupBodyTemplate} className={'text-center'} />
+          <Column header="STC" alignHeader={'center'} field="so_tc" style={{ width: '5%' }} className={'text-center'} />
+          <Column
+            header="Lớp"
+            alignHeader={'center'}
+            field="lop"
+            filter
+            showClearButton={false}
+            showFilterMenu={false}
+            style={{ width: '10%' }}
+            className={'text-center'}
+          />
+          <Column
+            header="SL/CL"
+            alignHeader={'center'}
+            style={{ width: '5%' }}
+            body={amountBodyTemplate}
+            className={'text-center'}
+          />
+          <Column header="Thời khoá biểu" alignHeader={'center'} body={scheduleBodyTemplate} />
+        </DataTable>
+      </Box>
+    </Box>
+  ) : (
+    <Box className={'flex justify-center items-center h-full'}>
+      <CircularProgress />
+    </Box>
   )
 }
 
