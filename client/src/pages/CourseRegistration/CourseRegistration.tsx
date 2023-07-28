@@ -1,11 +1,12 @@
 import { Search } from '@mui/icons-material'
-import { Checkbox, List, ListItem, OutlinedInput } from '@mui/material'
+import { List, ListItem, OutlinedInput } from '@mui/material'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
 import InputAdornment from '@mui/material/InputAdornment'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
+import CourseCheckBox from 'components/CourseRegistration/CourseCheckBox'
 import { FilterMatchMode } from 'primereact/api'
 import { Column } from 'primereact/column'
 import { DataTable, DataTableFilterMeta } from 'primereact/datatable'
@@ -61,6 +62,10 @@ const CourseRegistration: FC<CourseRegistrationProps> = () => {
   }
 
   const header = renderHeader()
+
+  const checkboxBodyTemplate = (course: Course) => {
+    return <CourseCheckBox course={course} />
+  }
 
   const groupBodyTemplate = (course: Course) => {
     return course.to !== '' ? (
@@ -140,16 +145,7 @@ const CourseRegistration: FC<CourseRegistrationProps> = () => {
             emptyMessage={
               <Typography className={'text-center text-gray-500'}>Không có dữ liệu nào được tìm thấy</Typography>
             }>
-            <Column
-              selectionMode="multiple"
-              field="id_to_hoc"
-              style={{ width: '2%' }}
-              body={
-                <>
-                  <Checkbox />
-                </>
-              }
-            />
+            <Column style={{ width: '2%' }} body={checkboxBodyTemplate} />
             <Column
               header="Mã MH"
               alignHeader={'center'}

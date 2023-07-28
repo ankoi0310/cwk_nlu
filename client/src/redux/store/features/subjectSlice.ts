@@ -13,7 +13,6 @@ export interface SubjectState {
   courseResponse: CourseResponse | null
   subjects: CourseSubject[] | null
   courses: Course[] | null
-  registerSuccess: boolean
 }
 
 const initialState: SubjectState = {
@@ -21,7 +20,6 @@ const initialState: SubjectState = {
   courseResponse: null,
   subjects: null,
   courses: null,
-  registerSuccess: false,
 }
 
 /*---------- Lấy danh sách nhóm/tổ môn học ----------*/
@@ -60,7 +58,9 @@ const registerCourse = createAsyncThunk(ACTION_TYPE.REGISTER_COURSE, async (data
 export const SubjectSlice = createSlice({
   name: 'subject',
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState,
+  },
   extraReducers: builder => {
     builder
       // get subject filter
@@ -75,10 +75,8 @@ export const SubjectSlice = createSlice({
 
         state.subjects = subjects
         state.courses = courses
-      })
-      // registration result
-      .addCase(registerCourse.fulfilled, (state, action) => {
-        state.registerSuccess = action.payload.data.is_thanh_cong
+
+        return state
       })
   },
 })
