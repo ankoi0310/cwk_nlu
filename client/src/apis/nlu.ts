@@ -11,9 +11,6 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(async function (config) {
-  config.timeout = 60 * 60 * 1000
-  config.proxy = false
-
   const persistStorage = await storage.getItem('persist:root')
   const { auth } = JSON.parse(persistStorage || '{}')
   const { user, isLogin } = JSON.parse(auth || '{}')
