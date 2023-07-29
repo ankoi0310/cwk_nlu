@@ -31,6 +31,7 @@ router.post(
 router.post(
   '/dkmh/w-locdsnhomto',
   useAsyncFunction(async (request, response) => {
+    request.setTimeout(60 * 1000 * 5)
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
