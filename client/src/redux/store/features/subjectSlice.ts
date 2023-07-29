@@ -6,6 +6,8 @@ export const ACTION_TYPE = {
   GET_SUBJECT_FILTER: 'GET_SUBJECT_FILTER',
   GET_COURSE_LIST: 'GET_COURSE_LIST',
   REGISTER_COURSE: 'REGISTER_COURSE',
+  GET_REGISTERED_COURSE: 'GET_REGISTERED_COURSE',
+  REMOVE_REGISTERED_COURSE: 'REMOVE_REGISTERED_COURSE',
 }
 
 export interface SubjectState {
@@ -13,6 +15,9 @@ export interface SubjectState {
   courseResponse: CourseResponse | null
   subjects: CourseSubject[] | null
   courses: Course[] | null
+  courseRegistrationResponse: CourseRegistrationResponse | null
+  isUpdate: boolean
+  registeredCourseResponse: RegisteredCourseResponse | null
 }
 
 const initialState: SubjectState = {
@@ -20,6 +25,9 @@ const initialState: SubjectState = {
   courseResponse: null,
   subjects: null,
   courses: null,
+  courseRegistrationResponse: null,
+  registeredCourseResponse: null,
+  isUpdate: false,
 }
 
 /*---------- Lấy danh sách nhóm/tổ môn học ----------*/
@@ -51,9 +59,44 @@ const registerCourse = createAsyncThunk(ACTION_TYPE.REGISTER_COURSE, async (data
 
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response?.data || error)
+  }
+})
+/*--------------------*/
+
+/*---------- Đăng ký môn học ----------*/
+const getRegisteredCourse = createAsyncThunk(ACTION_TYPE.GET_REGISTERED_COURSE, async (data: any, thunkAPI) => {
+  try {
+    const response = await useAxios({
+      axiosInstance: axiosInstance,
+      method: 'POST',
+      url: '/dkmh/w-locdskqdkmhsinhvien',
+      data: data,
+    })
+
+    return thunkAPI.fulfillWithValue(response.data)
+  } catch (error: any) {
     return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
   }
 })
+/*--------------------*/
+
+/*---------- Đăng ký môn học ----------*/
+const removeRegisteredCourse = createAsyncThunk(ACTION_TYPE.REMOVE_REGISTERED_COURSE, async (data: any, thunkAPI) => {
+  try {
+    const response = await useAxios({
+      axiosInstance: axiosInstance,
+      method: 'POST',
+      url: '/dkmh/w-xulydkmhsinhvien',
+      data: data,
+    })
+
+    return thunkAPI.fulfillWithValue(response.data)
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message)
+  }
+})
+/*--------------------*/
 
 export const SubjectSlice = createSlice({
   name: 'subject',
@@ -78,7 +121,27 @@ export const SubjectSlice = createSlice({
 
         return state
       })
+      // register course
+      .addCase(registerCourse.fulfilled, (state, action) => {
+        state.courseRegistrationResponse = action.payload.data
+        state.isUpdate = true
+        return state
+      })
+      // get registered course
+      .addCase(getRegisteredCourse.fulfilled, (state, action) => {
+        state.registeredCourseResponse = action.payload.data
+        if (state.isUpdate) {
+          state.isUpdate = false
+        }
+        return state
+      })
+      // remove registered course
+      .addCase(removeRegisteredCourse.fulfilled, (state, action) => {
+        state.courseRegistrationResponse = action.payload.data
+        state.isUpdate = true
+        return state
+      })
   },
 })
 
-export { getCourses, registerCourse }
+export { getCourses, registerCourse, getRegisteredCourse, removeRegisteredCourse }

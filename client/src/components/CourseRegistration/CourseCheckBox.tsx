@@ -1,7 +1,7 @@
 import { CircularProgress, Tooltip } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import React, { FC, useState } from 'react'
-import { useAppDispatch } from 'redux/store'
+import React, { FC, useEffect, useState } from 'react'
+import { useAppDispatch, useAppSelector } from 'redux/store'
 import { registerCourse } from 'redux/store/features/subjectSlice'
 import MySwal from 'utils/custom/MySwal'
 import Checkbox from '@mui/material/Checkbox'
@@ -11,9 +11,10 @@ interface CourseCheckBoxProps {
 }
 
 const CourseCheckBox: FC<CourseCheckBoxProps> = props => {
+  const { isLogin } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
   const { course } = props
-  const [checked, setChecked] = useState<boolean>(course.is_dk)
+  const [checked, setChecked] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
 
   const register = async (id_to_hoc: string, is_checked: boolean) => {
@@ -26,9 +27,11 @@ const CourseCheckBox: FC<CourseCheckBoxProps> = props => {
       }),
     )
 
+    console.log(response)
     const registrationResult: CourseRegistrationResponse = response.payload.data
 
-    if (!registrationResult.is_thanh_cong) {
+    console.log(registrationResult)
+    if (isLogin && !registrationResult.is_thanh_cong) {
       MySwal.fire({
         icon: 'error',
         text: registrationResult.thong_bao_loi,
@@ -46,6 +49,10 @@ const CourseCheckBox: FC<CourseCheckBoxProps> = props => {
       setLoading(false)
     })
   }
+
+  useEffect(() => {
+    setChecked(course.is_dk)
+  }, [course])
 
   return (
     course && (

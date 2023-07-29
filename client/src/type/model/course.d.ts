@@ -89,4 +89,23 @@ declare class CourseRegistrationResult {
   ds_kqdkmh: RegisteredCourse[]
 }
 
-declare class RegisteredCourse {}
+declare class RegisteredCourseResponse {
+  total_items: number
+  total_pages: number
+  so_tin_chi_min: number
+  ngay_in: string
+  is_show_nganh_hoc: false
+  ds_kqdkmh: RegisteredCourse[]
+}
+
+declare class RegisteredCourse {
+  id_kqdk: string
+  trang_thai_mon: string
+  ngay_dang_ky: string
+  nguoi_dang_ky: string
+  is_da_rut_mon_hoc: boolean
+  enable_xoa: boolean
+  dien_giai_enable_xoa: string
+  hoc_phi_tam_tinh: number
+  to_hoc: Course
+}
