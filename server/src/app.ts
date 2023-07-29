@@ -21,6 +21,13 @@ app.use(express.urlencoded({ limit: '10mb', extended: true, parameterLimit: 5000
 app.options('*', cors())
 
 /*---------- API ------------*/
+app.use(function (request, response, next) {
+  request.setTimeout(60 * 60 * 1000, function () {
+    console.log('Request has timed out.')
+    response.send(408)
+  })
+  next()
+})
 app.use('/api', routes)
 /*---------------------------*/
 
