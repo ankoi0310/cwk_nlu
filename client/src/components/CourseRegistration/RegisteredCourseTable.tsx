@@ -96,7 +96,7 @@ const RegisteredCourseTable = () => {
       />
     </DataTable>
   ) : (
-    <Box className={'flex justify-center items-center h-full'}>
+    <Box className={'flex justify-center items-center w-full h-full'}>
       <CircularProgress />
     </Box>
   )

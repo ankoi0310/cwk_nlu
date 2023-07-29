@@ -25,7 +25,6 @@ const CourseRemoveButton: FC<CourseRemoveButtonProps> = props => {
         },
       }),
     )
-    setLoading(false)
   }
 
   return (
