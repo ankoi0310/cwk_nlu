@@ -9,6 +9,7 @@ const router = express.Router()
 router.post(
   '/login',
   useAsyncFunction(async (request, response) => {
+    request.setTimeout(60 * 1000 * 5)
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
@@ -32,6 +33,7 @@ router.post(
 router.post(
   '/logout',
   useAsyncFunction(async (request, response) => {
+    request.setTimeout(60 * 1000 * 5)
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,

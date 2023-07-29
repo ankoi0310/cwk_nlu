@@ -27,10 +27,7 @@ const CourseCheckBox: FC<CourseCheckBoxProps> = props => {
       }),
     )
 
-    console.log(response)
     const registrationResult: CourseRegistrationResponse = response.payload.data
-
-    console.log(registrationResult)
     if (isLogin && !registrationResult.is_thanh_cong) {
       MySwal.fire({
         icon: 'error',

@@ -9,6 +9,7 @@ const router = express.Router()
 router.post(
   '/w-locdsbanner',
   useAsyncFunction(async (request, response) => {
+    request.setTimeout(60 * 1000 * 5)
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
@@ -29,6 +30,7 @@ router.post(
 router.post(
   '/w-locdsbaiviet',
   useAsyncFunction(async (request, response) => {
+    request.setTimeout(60 * 1000 * 5)
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,

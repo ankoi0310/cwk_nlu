@@ -9,6 +9,7 @@ const router = express.Router()
 router.post(
   '/report/w-locdshockyhocphisinhvien',
   useAsyncFunction(async (request, response) => {
+    request.setTimeout(60 * 1000 * 5)
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
@@ -32,6 +33,7 @@ router.post(
 router.post(
   '/rms/w-locdstonghophocphisv',
   useAsyncFunction(async (request, response) => {
+    request.setTimeout(60 * 1000 * 5)
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
@@ -54,6 +56,7 @@ router.post(
 router.post(
   '/rms/w-locdschitiethocphisvtheohocky',
   useAsyncFunction(async (request, response) => {
+    request.setTimeout(60 * 1000 * 5)
     try {
       const res = await useAxios({
         axiosInstance: axiosInstance,
